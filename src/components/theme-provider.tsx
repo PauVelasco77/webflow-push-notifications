@@ -1,5 +1,5 @@
-import {createContext, useContext, useEffect} from "react";
-import {useTheme} from "@/hooks/use-theme";
+import { createContext, useContext, useEffect } from "react";
+import { useTheme } from "@/hooks/use-theme";
 
 type Theme = "light" | "dark";
 
@@ -16,7 +16,7 @@ interface ThemeProviderProps {
 /**
  * Theme provider component that handles automatic theme detection and application
  */
-export const ThemeProvider = ({children}: ThemeProviderProps) => {
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const themeHook = useTheme();
 
   // Apply initial theme detection on mount

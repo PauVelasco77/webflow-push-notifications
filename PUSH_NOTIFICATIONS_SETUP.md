@@ -23,7 +23,7 @@ You'll need to add PushEngage configuration to your application. Create a new fi
 
 ```typescript
 export const pushEngageConfig = {
-  siteKey: 'YOUR_SITE_KEY_HERE', // Replace with your actual site key
+  siteKey: "YOUR_SITE_KEY_HERE", // Replace with your actual site key
   // Add other configuration options as needed
 };
 ```
@@ -72,6 +72,7 @@ src/
 ## 🔍 Browser Support
 
 Push notifications are supported in:
+
 - Chrome 42+
 - Firefox 44+
 - Safari 16+ (macOS 13+)
