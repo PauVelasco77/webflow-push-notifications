@@ -104,80 +104,102 @@ export const PushNotifications = () => {
 
   const getStatusBadge = () => {
     if (!status.isSupported) {
-      return <Badge variant='destructive'>Not Supported</Badge>;
+      return <Badge variant='destructive'>No Soportado</Badge>;
     }
 
     switch (status.permission) {
       case "granted":
         return status.isSubscribed ? (
-          <Badge variant='default'>Subscribed</Badge>
+          <Badge variant='default' className='bg-success text-success-foreground'>
+            ✅ Activo
+          </Badge>
         ) : (
-          <Badge variant='secondary'>Permitted</Badge>
+          <Badge variant='secondary'>Permitido</Badge>
         );
       case "denied":
-        return <Badge variant='destructive'>Denied</Badge>;
+        return <Badge variant='destructive'>❌ Denegado</Badge>;
       default:
-        return <Badge variant='outline'>Not Asked</Badge>;
+        return <Badge variant='outline'>⏳ Pendiente</Badge>;
     }
   };
 
   const getDescription = () => {
     if (!status.isSupported) {
-      return "Your browser doesn't support push notifications.";
+      return "Tu navegador no soporta notificaciones push.";
     }
 
     switch (status.permission) {
       case "granted":
         return status.isSubscribed
-          ? "You're subscribed to push notifications!"
-          : "Permission granted. The subscription will be handled by PushEngage.";
+          ? "¡Estás suscrito a las notificaciones de Tutellus!"
+          : "Permisos concedidos. La suscripción será gestionada automáticamente.";
       case "denied":
-        return "Push notifications are blocked. Please enable them in your browser settings.";
+        return "Las notificaciones están bloqueadas. Actívalas en la configuración de tu navegador.";
       default:
-        return "Click the button below to enable push notifications and stay updated.";
+        return "Activa las notificaciones para mantenerte al día con los últimos cursos y actualizaciones de Tutellus.";
     }
   };
 
   return (
-    <Card className='w-full max-w-md mx-auto'>
-      <CardHeader>
-        <div className='flex items-center justify-between'>
-          <CardTitle>Push Notifications</CardTitle>
-          {getStatusBadge()}
+    <Card className='w-full max-w-md mx-auto border-0 shadow-lg bg-card/50 backdrop-blur-sm'>
+      <CardHeader className='text-center pb-4'>
+        <div className='mx-auto w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl flex items-center justify-center mb-4'>
+          <span className='text-2xl text-white'>🔔</span>
         </div>
-        <CardDescription>{getDescription()}</CardDescription>
+        <CardTitle className='text-2xl font-bold'>Activar Notificaciones</CardTitle>
+        <CardDescription className='text-base leading-relaxed'>{getDescription()}</CardDescription>
+        <div className='flex justify-center mt-3'>{getStatusBadge()}</div>
       </CardHeader>
-      <CardContent className='space-y-4'>
+      <CardContent className='space-y-4 pt-0'>
         {status.permission === "default" && status.isSupported && (
-          <Button onClick={requestNotificationPermission} disabled={isLoading} className='w-full'>
-            {isLoading ? "Requesting..." : "Enable Notifications"}
+          <Button
+            onClick={requestNotificationPermission}
+            disabled={isLoading}
+            className='w-full h-12 text-base font-semibold bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 shadow-lg'>
+            {isLoading ? (
+              <div className='flex items-center gap-2'>
+                <div className='animate-spin w-4 h-4 border-2 border-white/30 border-t-white rounded-full'></div>
+                Activando...
+              </div>
+            ) : (
+              "Activar Notificaciones"
+            )}
           </Button>
         )}
 
         {status.permission === "granted" && (
-          <div className='space-y-2'>
-            <Button onClick={sendTestNotification} variant='default' className='w-full'>
-              Send Test Notification
+          <div className='space-y-3'>
+            <div className='flex items-center gap-2 p-3 bg-success/10 border border-success/20 rounded-lg'>
+              <span className='text-success'>✅</span>
+              <span className='text-sm font-medium text-success'>¡Notificaciones activadas!</span>
+            </div>
+            <Button
+              onClick={sendTestNotification}
+              variant='outline'
+              className='w-full h-10 border-primary/20 hover:bg-primary/5'>
+              Enviar Notificación de Prueba
             </Button>
             <p className='text-xs text-muted-foreground/70 text-center'>
-              Click to verify notifications are working correctly
+              Haz clic para verificar que las notificaciones funcionan correctamente
             </p>
           </div>
         )}
 
         {status.permission === "denied" && (
-          <Alert>
-            <AlertDescription>
-              To receive notifications, please enable them in your browser settings and refresh the page.
+          <Alert className='border-destructive/20 bg-destructive/5'>
+            <span className='text-destructive'>⚠️</span>
+            <AlertDescription className='ml-2'>
+              Para recibir notificaciones, actívalas en la configuración de tu navegador y recarga la página.
             </AlertDescription>
           </Alert>
         )}
 
         {!status.isSupported && (
-          <Alert>
-            <AlertDescription>
-              Push notifications are not supported in this browser. Please try using a modern browser like Chrome,
-              Firefox, or Safari.
+          <Alert className='border-warning/20 bg-warning/5'>
+            <span className='text-warning'>ℹ️</span>
+            <AlertDescription className='ml-2'>
+              Las notificaciones push no están soportadas en este navegador. Usa un navegador moderno como Chrome,
+              Firefox o Safari.
             </AlertDescription>
           </Alert>
         )}
