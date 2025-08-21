@@ -186,22 +186,26 @@ export const PushNotifications = () => {
         )}
 
         {status.permission === "denied" && (
-          <Alert className='border-destructive/20 bg-destructive/5'>
-            <span className='text-destructive'>⚠️</span>
-            <AlertDescription className='ml-2'>
-              Para recibir notificaciones, actívalas en la configuración de tu navegador y recarga la página.
-            </AlertDescription>
-          </Alert>
+          <div className='p-4 rounded-lg border border-destructive/20 bg-destructive/5'>
+            <div className='flex gap-3'>
+              <span className='text-destructive text-lg'>⚠️</span>
+              <p className='text-sm text-destructive/80 leading-relaxed'>
+                Para recibir notificaciones, actívalas en la configuración de tu navegador y recarga la página.
+              </p>
+            </div>
+          </div>
         )}
 
         {!status.isSupported && (
-          <Alert className='border-warning/20 bg-warning/5'>
-            <span className='text-warning'>ℹ️</span>
-            <AlertDescription className='ml-2'>
-              Las notificaciones push no están soportadas en este navegador. Usa un navegador moderno como Chrome,
-              Firefox o Safari.
-            </AlertDescription>
-          </Alert>
+          <div className='p-4 rounded-lg border border-warning/20 bg-warning/5'>
+            <div className='flex gap-3'>
+              <span className='text-warning text-lg'>ℹ️</span>
+              <p className='text-sm text-warning/80 leading-relaxed'>
+                Las notificaciones push no están soportadas en este navegador. Usa un navegador moderno como Chrome,
+                Firefox o Safari.
+              </p>
+            </div>
+          </div>
         )}
       </CardContent>
     </Card>
