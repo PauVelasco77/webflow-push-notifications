@@ -70,6 +70,38 @@ export const PushNotifications = () => {
     }
   };
 
+  const sendTestNotification = async (): Promise<void> => {
+    if (!status.isSupported) {
+      alert("Push notifications are not supported in this browser");
+      return;
+    }
+
+    if (status.permission !== "granted") {
+      alert("Please enable notifications first");
+      return;
+    }
+
+    try {
+      // Try to send a test notification using the Notification API
+      new Notification("Tutellus Test Notification", {
+        body: "This is a test notification from Tutellus! 🎉",
+        icon: "/tutellus.svg",
+        badge: "/tutellus.svg",
+        tag: "tutellus-test",
+        requireInteraction: false,
+        data: {
+          type: "test",
+          timestamp: Date.now(),
+        },
+      });
+
+      console.log("Test notification sent successfully");
+    } catch (error) {
+      console.error("Failed to send test notification:", error);
+      alert("Failed to send test notification. Please check your browser settings.");
+    }
+  };
+
   const getStatusBadge = () => {
     if (!status.isSupported) {
       return <Badge variant='destructive'>Not Supported</Badge>;
@@ -120,6 +152,15 @@ export const PushNotifications = () => {
           <Button onClick={requestNotificationPermission} disabled={isLoading} className='w-full'>
             {isLoading ? "Requesting..." : "Enable Notifications"}
           </Button>
+        )}
+
+        {status.permission === "granted" && (
+          <div className='space-y-2'>
+            <Button onClick={sendTestNotification} variant='outline' className='w-full'>
+              Send Test Notification
+            </Button>
+            <p className='text-xs text-gray-500 text-center'>Click to verify notifications are working correctly</p>
+          </div>
         )}
 
         {status.permission === "denied" && (
