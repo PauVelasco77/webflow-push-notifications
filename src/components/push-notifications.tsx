@@ -156,10 +156,12 @@ export const PushNotifications = () => {
 
         {status.permission === "granted" && (
           <div className='space-y-2'>
-            <Button onClick={sendTestNotification} variant='outline' className='w-full'>
+            <Button onClick={sendTestNotification} variant='default' className='w-full'>
               Send Test Notification
             </Button>
-            <p className='text-xs text-gray-500 text-center'>Click to verify notifications are working correctly</p>
+            <p className='text-xs text-muted-foreground/70 text-center'>
+              Click to verify notifications are working correctly
+            </p>
           </div>
         )}
 
